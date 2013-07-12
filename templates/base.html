@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="style.css" />
+	<link rel="alternate" type="application/rss+xml" title="Newsmemory RSS Feed" href="http://newsmemory.homeunix.org/site_media/latest_news.rss" />
+    <title>{% block title %}Newsmemory{% endblock %}</title>
+	
+	<style type='text/css'>
+
+	body {
+		font-family: "verdana", sans-serif;
+		background-color:#ececec;
+		font-size:12px;
+		margin:20px;
+	 }
+
+	tt {
+		color:green;
+	}
+
+	a {
+		color:blue;
+		font-weight: bolder;
+	}
+
+	.flagged {
+	   background-color:pink;		
+	}
+
+	.highlight {
+	   background-color:yellow;
+	}
+
+	.highlight0 {
+	   background-color:yellow;
+	}
+
+	.highlight1 {
+	   background-color:skyblue;
+	}
+
+	.highlight2 {
+	   background-color:violet;
+	}
+
+	.highlight3 {
+	   background-color:orange;
+	}
+
+	.highlight4 {
+	   background-color:lime;
+	}
+
+	.literal {
+	    color:green;
+	}
+
+	.article {
+		font-family: "verdana", sans-serif;
+		background-color:white;
+		font-size:12px;
+		margin-left:20%;
+		margin-right:20%;
+		padding:10px;
+	}
+
+	#sidebar {
+		padding-bottom: 1em;
+		text-align:center;
+	}
+
+	#headlines {
+		//padding-top:1em;
+	}
+
+	.article_title {
+		font-weight:bold;
+		font-size:14px;
+	}
+
+
+	CAPTION {
+	    font-weight:bold;
+	}
+
+	TD#count {
+	    text-align:right;
+	}
+
+	TABLE {
+	    border-spacing:0pt;
+	}
+
+	TABLE#happeningCountries {
+	    position:absolute;
+	    left:300px;
+	    padding-top:0px;
+	    width:250px;
+	}
+
+	TABLE#allCountries {
+	    position:absolute;
+	    left:20px;
+	    padding-top:0px;
+	    width:250px;
+	}
+
+	a:link {text-decoration:none;}
+	a:visited {color:gray;
+	           text-decoration:none;}
+	a:hover {color:red;}
+
+	strong {
+		font-weight: bolder;
+	}
+
+	</style>
+
+</head>
+
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+		
+		[<a href="/">Latest news</a>]
+        [<a href="/24Heures/">24Heures</a>]
+        [<a href="/LeMonde/">Le Monde</a>]
+        [<a href="/ISN/">ISN</a>]
+        [<a href="/search/">recherche</a>]
+        [<a href="/flaggednews/">flagged</a>]
+		
+		{% if user.is_authenticated %}
+		 	[<a href="/accounts/logout/">logout {{ user }}</a>]
+		{% else %}
+		 	[<a href="/accounts/login/">login</a>]
+		{% endif %}
+				
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

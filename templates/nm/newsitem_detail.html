@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+	{% block title %}{{ object.source }} - {{ object.title }}{% endblock %}
+
+    {% block content %}
+
+	{% if debug %}
+	<div id="debug">
+	  <h2>Queries</h2>
+	  <p>
+	    {{ sql_queries|length }} Queries
+	    {% ifnotequal sql_queries|length 0 %}
+	    (<span style="cursor: pointer;" onclick="document.getElementById('debugQueryTable').style.display='';">Show</span>)
+	    {% endifnotequal %}
+	  </p>
+	  <table id="debugQueryTable" style="display: none;">
+	    <col width="1"></col>
+	    <col></col>
+	    <col width="1"></col>
+	    <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">SQL</th>
+	      <th scope="col">Time</th>
+	    </tr>
+	    </thead>
+	    <tbody>
+	    {% for query in sql_queries %}<tr class="{% cycle odd,even %}">
+	      <td>{{ forloop.counter }}</td>
+	      <td>{{ query.sql|escape }}</td>
+	      <td>{{ query.time }}</td>
+	    </tr>{% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+	{% endif %}
+
+
+	<div class='article'>
+		{% if object.source.image %}
+			<A HREF="{{ object.link }}"> <IMG SRC="{{ object.source.image }}" BORDER="0"></A>
+		{% endif %}
+		<BR /><BR />
+		<span class='article_title'>{{ object.title }}</span>
+		
+		{% if is_flagged %}
+		<p><em>[vous avez recommandé cet article]</em> <a href="/unflag/{{ object.id }}/">[supprimer la recommandation]</a></p>
+		{% else %}
+		<p><a href="/flag/{{ object.id }}/">[recommander cet article]</a></p>
+		{% endif %}
+		
+		<P>{{ object.time|french_datetime }}</P>
+		
+		{% if q %}
+			{{ object.text|highlight:q|linebreaks }}
+		{% else %}
+			{{ object.text|linebreaks }}
+		{% endif %}
+		
+		<P>Source : {{ object.link|urlize }}</P>
+	</DIV>
+	
+    {% endblock %}

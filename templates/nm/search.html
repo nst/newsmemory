@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+	{% block title %}Newsmemory - recherche{% endblock %}
+
+    {% block content %}
+
+	<div id="sidebar">
+		<p>
+		<form action="/search/" method="post">
+		{{ form.q }}<input type="submit" value="Rechercher" />
+		</form>
+		</p>
+
+		{% if q %}
+		<h4>{{ q }}</h4>
+		{{ hits }} articles, page {{ page }} sur {{ pages }}
+		{% endif %}
+		
+	</div>
+	
+	<p>
+	{% if has_next %}
+	[<a href="/search/?page={{ page|add:1 }}">plus anciens</a>]
+	{% endif %}
+
+	{% if has_previous %}
+	[<a href="/search/?page={{ page|add:"-1" }}">plus récents</a>]
+	{% endif %}
+
+	</p>
+
+	{% for n in object_list %}
+	{{ n.pretty_time }} - {{ n.category }} - {{ n.place }} ({{ n.source }}) - {{ n.is_flagged|flagged_icon }} <a href="{{ n.get_absolute_url }}">{{ n.title }}</a><br />
+	{% endfor %}
+	
+	<p>
+	{% if has_next %}
+	[<a href="/search/?page={{ page|add:1 }}">plus anciens</a>]
+	{% endif %}
+
+	{% if has_previous %}
+	[<a href="/search/?page={{ page|add:"-1" }}">plus récents</a>]
+	{% endif %}
+	</p>
+	
+	{% endblock %}

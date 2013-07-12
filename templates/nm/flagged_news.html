@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div id="sidebar">
+	<!--{{ hits }} articles, page {{ page }} sur {{ pages }}-->
+	
+	{% if source %}
+		<A HREF="{{ source.link }}"> <IMG SRC="{{ source.image }}" BORDER="0"></A>
+	{% else %}
+		{{ source }}
+	{% endif %}
+
+	{% if date %}
+	<h4>{{ date|french_date }}</h4>
+	{% endif %}
+
+</div>
+
+<div id='headlines'>
+	<p>
+		{% if has_next %}
+		[<a href="?page={{ page|add:1 }}">plus anciens</a>]
+		{% endif %}
+
+		{% if has_previous %}
+		[<a href="?page={{ page|add:"-1" }}">plus récents</a>]
+		{% endif %}
+	</p>
+
+{% for n in object_list %}
+	<span class="{% if n.is_flagged %}flagged{% endif %}">{{ n.pretty_time }} - {{ n.category }} - {{ n.place }} ({{ n.source }}) <a href="{{ n.get_absolute_url }}">{{ n.title }}</a></span><br />
+{% endfor %}
+
+	<p>
+		{% if has_next %}
+		[<a href="?page={{ page|add:1 }}">plus anciens</a>]
+		{% endif %}
+
+		{% if has_previous %}
+		[<a href="?page={{ page|add:"-1" }}">plus récents</a>]
+		{% endif %}
+	</p>
+
+</div>
+
+
+{% endblock %}
+
+
